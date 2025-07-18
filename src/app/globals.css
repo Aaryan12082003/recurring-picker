@@ -24,3 +24,78 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Performance optimizations for smooth scrolling */
+* {
+  scroll-behavior: smooth;
+}
+
+/* Mobile touch optimizations */
+.modern-calendar {
+  contain: layout style paint;
+  will-change: scroll-position;
+  scroll-snap-type: y mandatory;
+  /* Mobile touch improvements */
+  -webkit-overflow-scrolling: touch;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  touch-action: none;
+}
+
+/* Hardware acceleration for better performance */
+.modern-calendar * {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000;
+  /* GPU acceleration for mobile */
+  -webkit-transform: translate3d(0, 0, 0);
+  -webkit-backface-visibility: hidden;
+}
+
+/* Ultra-fast transitions for mobile responsiveness */
+.calendar-day {
+  transition: all 0.1s cubic-bezier(0.25, 0.8, 0.25, 1);
+  will-change: transform, background-color;
+  /* Touch feedback optimization */
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Fast calendar transitions */
+.modern-calendar .calendar-grid {
+  transition: transform 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+  will-change: transform;
+}
+
+/* Optimized scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+  transition: background 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    scroll-behavior: auto;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}

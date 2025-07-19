@@ -186,9 +186,21 @@ const AdvancedRRuleDemo = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-6 space-y-6">
-      <div className="bg-white rounded-lg shadow-md p-6">
-        <h2 className="text-2xl font-bold mb-6 text-gray-800">Custom RRule Builder</h2>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 py-8">
+      <div className="max-w-4xl mx-auto p-6 space-y-6">
+        {/* Header Section */}
+        <div className="text-center mb-8">
+          <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">
+            🔄 ReCall - Recurring Event Builder
+          </h1>
+          <p className="text-gray-600 text-lg">Create beautiful recurring schedules with ease</p>
+        </div>
+
+        <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
+          <h2 className="text-2xl font-bold mb-6 text-gray-800 flex items-center">
+            <span className="mr-3 text-blue-500">⚙️</span>
+            Custom RRule Builder
+          </h2>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
           <div>
@@ -391,10 +403,16 @@ const AdvancedRRuleDemo = () => {
         )}
       </div>
 
-      <div className="bg-white rounded-lg shadow-md p-6">
-        <h3 className="text-xl font-bold mb-4 text-gray-800">Calendar View</h3>
+      <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
+        <h3 className="text-xl font-bold mb-4 text-gray-800 flex items-center">
+          <span className="mr-3 text-green-500">📅</span>
+          Calendar View
+        </h3>
         {occurrences.length === 0 ? (
-          <p className="text-gray-500">Click "Generate Recurring Dates" to see occurrences on calendar.</p>
+          <div className="text-center py-8">
+            <div className="text-6xl mb-4">📅</div>
+            <p className="text-gray-500 text-lg">Click "Generate Recurring Dates" to see occurrences on calendar.</p>
+          </div>
         ) : (
           <div className="space-y-4">
             <p className="text-sm text-gray-600 mb-4">
@@ -408,12 +426,12 @@ const AdvancedRRuleDemo = () => {
             
             {/* Quick stats */}
             <div className="grid grid-cols-2 gap-4 mt-4">
-              <div className="bg-blue-50 p-3 rounded-md">
-                <div className="text-sm text-blue-600">Total Events</div>
-                <div className="text-lg font-semibold text-blue-800">{occurrences.length}</div>
+              <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-4 rounded-lg border border-blue-200 shadow-sm">
+                <div className="text-sm text-blue-600 font-medium">📊 Total Events</div>
+                <div className="text-2xl font-bold text-blue-800">{occurrences.length}</div>
               </div>
-              <div className="bg-green-50 p-3 rounded-md">
-                <div className="text-sm text-green-600">Next Event</div>
+              <div className="bg-gradient-to-br from-green-50 to-green-100 p-4 rounded-lg border border-green-200 shadow-sm">
+                <div className="text-sm text-green-600 font-medium">⏰ Next Event</div>
                 <div className="text-lg font-semibold text-green-800">
                   {occurrences.length > 0 ? occurrences[0].toLocaleDateString() : 'None'}
                 </div>
@@ -423,9 +441,12 @@ const AdvancedRRuleDemo = () => {
         )}
       </div>
 
-      <div className="bg-white rounded-lg shadow-md p-6">
-        <h3 className="text-xl font-bold mb-4 text-gray-800">Quick Examples</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
+        <h3 className="text-xl font-bold mb-4 text-gray-800 text-center flex items-center justify-center">
+          <span className="mr-3 text-purple-500">🚀</span>
+          Quick Examples
+        </h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 max-w-3xl mx-auto">
           <button
             onClick={() => {
               setFrequency(RRule.WEEKLY);
@@ -436,10 +457,13 @@ const AdvancedRRuleDemo = () => {
               setHour('9');
               setMinute('0');
             }}
-            className="p-3 bg-blue-50 border border-blue-200 rounded-md hover:bg-blue-100 text-left"
+            className="p-4 bg-blue-50 border-2 border-blue-200 rounded-xl hover:bg-blue-100 text-left transition-all duration-300 hover:shadow-lg hover:scale-105 transform"
           >
-            <h4 className="font-semibold text-blue-800">Every Mon & Wed at 9 AM</h4>
-            <p className="text-sm text-blue-600">Weekly meeting pattern</p>
+            <h4 className="font-bold text-blue-800 flex items-center">
+              <span className="mr-2">📅</span>
+              Every Mon & Wed at 9 AM
+            </h4>
+            <p className="text-sm text-blue-600 mt-1">Weekly meeting pattern</p>
           </button>
 
           <button
@@ -452,10 +476,13 @@ const AdvancedRRuleDemo = () => {
               setHour('14');
               setMinute('0');
             }}
-            className="p-3 bg-green-50 border border-green-200 rounded-md hover:bg-green-100 text-left"
+            className="p-4 bg-green-50 border-2 border-green-200 rounded-xl hover:bg-green-100 text-left transition-all duration-300 hover:shadow-lg hover:scale-105 transform"
           >
-            <h4 className="font-semibold text-green-800">15th of every month at 2 PM</h4>
-            <p className="text-sm text-green-600">Monthly report deadline</p>
+            <h4 className="font-bold text-green-800 flex items-center">
+              <span className="mr-2">📋</span>
+              15th of every month at 2 PM
+            </h4>
+            <p className="text-sm text-green-600 mt-1">Monthly report deadline</p>
           </button>
 
           <button
@@ -467,10 +494,13 @@ const AdvancedRRuleDemo = () => {
               setHour('8');
               setMinute('30');
             }}
-            className="p-3 bg-purple-50 border border-purple-200 rounded-md hover:bg-purple-100 text-left"
+            className="p-4 bg-purple-50 border-2 border-purple-200 rounded-xl hover:bg-purple-100 text-left transition-all duration-300 hover:shadow-lg hover:scale-105 transform"
           >
-            <h4 className="font-semibold text-purple-800">Daily at 8:30 AM</h4>
-            <p className="text-sm text-purple-600">Daily standup for 30 days</p>
+            <h4 className="font-bold text-purple-800 flex items-center">
+              <span className="mr-2">☀️</span>
+              Daily at 8:30 AM
+            </h4>
+            <p className="text-sm text-purple-600 mt-1">Daily standup for 30 days</p>
           </button>
 
           <button
@@ -483,12 +513,16 @@ const AdvancedRRuleDemo = () => {
               setHour('');
               setMinute('');
             }}
-            className="p-3 bg-orange-50 border border-orange-200 rounded-md hover:bg-orange-100 text-left"
+            className="p-4 bg-orange-50 border-2 border-orange-200 rounded-xl hover:bg-orange-100 text-left transition-all duration-300 hover:shadow-lg hover:scale-105 transform"
           >
-            <h4 className="font-semibold text-orange-800">Weekdays only</h4>
-            <p className="text-sm text-orange-600">Business days pattern</p>
+            <h4 className="font-bold text-orange-800 flex items-center">
+              <span className="mr-2">💼</span>
+              Weekdays only
+            </h4>
+            <p className="text-sm text-orange-600 mt-1">Business days pattern</p>
           </button>
         </div>
+      </div>
       </div>
     </div>
   );

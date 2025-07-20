@@ -3,11 +3,16 @@
 import { useState, useEffect, useMemo } from 'react';
 import { RRule } from 'rrule';
 import ModernCalendar from './ModernCalendar';
+import { useHydratedEventStore } from '../store/eventStore';
 
 const AdvancedRRuleDemo = () => {
   const [occurrences, setOccurrences] = useState<Date[]>([]);
   const [ruleText, setRuleText] = useState('');
-  const [startDate, setStartDate] = useState(new Date().toISOString().slice(0, 16));
+  const [startDate, setStartDate] = useState('');
+  const [isClient, setIsClient] = useState(false);
+  
+  // Get calendar settings from Zustand store for consistency
+  const { calendarSettings } = useHydratedEventStore();
   
   // User configurable options
   const [frequency, setFrequency] = useState(RRule.WEEKLY);
@@ -19,6 +24,12 @@ const AdvancedRRuleDemo = () => {
   const [monthDay, setMonthDay] = useState('');
   const [hour, setHour] = useState('');
   const [minute, setMinute] = useState('');
+
+  // Initialize client-side only values
+  useEffect(() => {
+    setIsClient(true);
+    setStartDate(new Date().toISOString().slice(0, 16));
+  }, []);
 
   // Memoized calendar events for performance
   const calendarEvents = useMemo(() => {
@@ -139,13 +150,16 @@ const AdvancedRRuleDemo = () => {
     if (useCount) {
       description += `, for ${countValue} occurrence${countValue !== 1 ? 's' : ''}`;
     } else if (until) {
-      const untilDate = new Date(until).toLocaleDateString();
+      // Use consistent date formatting to prevent hydration issues
+      const untilDate = new Date(until).toISOString().split('T')[0];
       description += `, until ${untilDate}`;
     }
 
-    // Start date
-    const startDateStr = new Date(startDate).toLocaleDateString();
-    description += `, starting from ${startDateStr}`;
+    // Start date - use consistent formatting
+    if (startDate) {
+      const startDateFormatted = new Date(startDate).toISOString().split('T')[0];
+      description += `, starting from ${startDateFormatted}`;
+    }
 
     return description;
   };
@@ -184,6 +198,22 @@ const AdvancedRRuleDemo = () => {
         : [...prev, day]
     );
   };
+
+  // Prevent hydration mismatch by showing loading state on server
+  if (!isClient) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 py-8">
+        <div className="max-w-4xl mx-auto p-6 space-y-6">
+          <div className="text-center mb-8">
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">
+              🔄 ReCall - Recurring Event Builder
+            </h1>
+            <p className="text-gray-600 text-lg">Loading...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 py-8">
@@ -433,7 +463,7 @@ const AdvancedRRuleDemo = () => {
               <div className="bg-gradient-to-br from-green-50 to-green-100 p-4 rounded-lg border border-green-200 shadow-sm">
                 <div className="text-sm text-green-600 font-medium">⏰ Next Event</div>
                 <div className="text-lg font-semibold text-green-800">
-                  {occurrences.length > 0 ? occurrences[0].toLocaleDateString() : 'None'}
+                  {occurrences.length > 0 ? occurrences[0].toISOString().split('T')[0] : 'None'}
                 </div>
               </div>
             </div>
@@ -456,6 +486,8 @@ const AdvancedRRuleDemo = () => {
               setUseCount(true);
               setHour('9');
               setMinute('0');
+              // Trigger generation after state updates
+              setTimeout(() => generateRule(), 100);
             }}
             className="p-4 bg-blue-50 border-2 border-blue-200 rounded-xl hover:bg-blue-100 text-left transition-all duration-300 hover:shadow-lg hover:scale-105 transform"
           >
@@ -475,6 +507,8 @@ const AdvancedRRuleDemo = () => {
               setUseCount(true);
               setHour('14');
               setMinute('0');
+              // Trigger generation after state updates
+              setTimeout(() => generateRule(), 100);
             }}
             className="p-4 bg-green-50 border-2 border-green-200 rounded-xl hover:bg-green-100 text-left transition-all duration-300 hover:shadow-lg hover:scale-105 transform"
           >
@@ -493,6 +527,8 @@ const AdvancedRRuleDemo = () => {
               setUseCount(true);
               setHour('8');
               setMinute('30');
+              // Trigger generation after state updates
+              setTimeout(() => generateRule(), 100);
             }}
             className="p-4 bg-purple-50 border-2 border-purple-200 rounded-xl hover:bg-purple-100 text-left transition-all duration-300 hover:shadow-lg hover:scale-105 transform"
           >
@@ -512,6 +548,8 @@ const AdvancedRRuleDemo = () => {
               setUseCount(true);
               setHour('');
               setMinute('');
+              // Trigger generation after state updates
+              setTimeout(() => generateRule(), 100);
             }}
             className="p-4 bg-orange-50 border-2 border-orange-200 rounded-xl hover:bg-orange-100 text-left transition-all duration-300 hover:shadow-lg hover:scale-105 transform"
           >

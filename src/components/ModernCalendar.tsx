@@ -10,10 +10,11 @@ interface CalendarEvent {
 interface ModernCalendarProps {
   events: CalendarEvent[];
   onDateClick?: (date: Date) => void;
+  selectedDate?: Date;
   className?: string;
 }
 
-const ModernCalendar = ({ events, onDateClick, className = '' }: ModernCalendarProps) => {
+const ModernCalendar = ({ events, onDateClick, selectedDate, className = '' }: ModernCalendarProps) => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   
   // Touch/scroll state for mobile fast navigation

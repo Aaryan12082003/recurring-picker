@@ -28,7 +28,15 @@ const RecurringPicker = () => {
     _hasHydrated
   } = useHydratedEventStore();
 
-  // Get upcoming events (always call hooks at top level)
+  // Only show content after hydration
+  if (!_hasHydrated) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-red-50 flex items-center justify-center">
+        <div className="text-amber-800">Loading...</div>
+      </div>
+    );
+  }
+
   const upcomingEvents = getUpcomingEvents(5);
 
   // Update form data
@@ -117,15 +125,6 @@ const RecurringPicker = () => {
     addEvent(event);
     resetForm();
   };
-
-  // Show loading state during hydration
-  if (!_hasHydrated) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-red-50 flex items-center justify-center">
-        <div className="text-amber-800">Loading...</div>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-red-50">

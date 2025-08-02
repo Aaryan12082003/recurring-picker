@@ -175,7 +175,15 @@ if (typeof window !== 'undefined') {
         
         // Deserialize RRule objects and dates
         if (data.events) {
-          data.events = data.events.map((event: any) => ({
+          data.events = data.events.map((event: {
+            id: string;
+            title: string;
+            rruleString: string;
+            startDate: string;
+            endDate?: string;
+            description?: string;
+            color?: string;
+          }) => ({
             ...event,
             rrule: new RRule(RRule.parseString(event.rruleString)),
             startDate: new Date(event.startDate),

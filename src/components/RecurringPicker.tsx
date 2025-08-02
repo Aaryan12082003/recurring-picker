@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { RRule } from 'rrule';
 import ModernCalendar from './ModernCalendar';
 import { useHydratedEventStore, CalendarEvent } from '../store/eventStore';
@@ -29,10 +29,10 @@ const RecurringPicker = () => {
   } = useHydratedEventStore();
 
   // Get upcoming events (always call hooks at top level)
-  const upcomingEvents = getUpcomingEvents(5);
+  // const upcomingEvents = getUpcomingEvents(5);
 
   // Update form data
-  const updateForm = (field: string, value: any) => {
+  const updateForm = (field: string, value: string | number | number[]) => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 

@@ -132,7 +132,7 @@ export class RRuleUtils {
   static toHumanText(rule: RRule): string {
     try {
       return rule.toText();
-    } catch (error) {
+    } catch {
       return rule.toString();
     }
   }

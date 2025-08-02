@@ -14,7 +14,7 @@ interface ModernCalendarProps {
   className?: string;
 }
 
-const ModernCalendar = ({ events, onDateClick, selectedDate, className = '' }: ModernCalendarProps) => {
+const ModernCalendar = ({ events, onDateClick, className = '' }: ModernCalendarProps) => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   
   // Touch/scroll state for mobile fast navigation
@@ -178,8 +178,6 @@ const ModernCalendar = ({ events, onDateClick, selectedDate, className = '' }: M
     if (!touchStartY || !touchStartTime) return;
     
     const deltaTime = Date.now() - touchStartTime;
-    const touch = e.changedTouches[0];
-    const deltaY = touch.clientY - touchStartY;
     
     // Momentum scrolling - if it was a fast swipe, do multiple month jumps
     if (Math.abs(velocity) > 0.3 && deltaTime < 400) {

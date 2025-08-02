@@ -3,16 +3,12 @@
 import { useState, useEffect, useMemo } from 'react';
 import { RRule } from 'rrule';
 import ModernCalendar from './ModernCalendar';
-import { useHydratedEventStore } from '../store/eventStore';
 
 const AdvancedRRuleDemo = () => {
   const [occurrences, setOccurrences] = useState<Date[]>([]);
   const [ruleText, setRuleText] = useState('');
   const [startDate, setStartDate] = useState('');
   const [isClient, setIsClient] = useState(false);
-  
-  // Get calendar settings from Zustand store for consistency
-  const { calendarSettings } = useHydratedEventStore();
   
   // User configurable options
   const [frequency, setFrequency] = useState(RRule.WEEKLY);
@@ -47,7 +43,7 @@ const AdvancedRRuleDemo = () => {
   const generateRule = () => {
     const date = new Date(startDate);
     
-    const ruleOptions: any = {
+    const ruleOptions: Record<string, unknown> = {
       freq: frequency,
       interval: typeof interval === 'string' ? (interval === '' ? 1 : parseInt(interval)) : interval,
       dtstart: date,
@@ -441,7 +437,7 @@ const AdvancedRRuleDemo = () => {
         {occurrences.length === 0 ? (
           <div className="text-center py-8">
             <div className="text-6xl mb-4">📅</div>
-            <p className="text-gray-500 text-lg">Click "Generate Recurring Dates" to see occurrences on calendar.</p>
+            <p className="text-gray-500 text-lg">Click &quot;Generate Recurring Dates&quot; to see occurrences on calendar.</p>
           </div>
         ) : (
           <div className="space-y-4">

@@ -174,7 +174,7 @@ const ModernCalendar = ({ events, onDateClick, className = '' }: ModernCalendarP
     }
   }, [touchStartY, touchStartTime, lastTouchY, navigateMonth]);
 
-  const handleTouchEnd = useCallback((e: React.TouchEvent) => {
+  const handleTouchEnd = useCallback(() => {
     if (!touchStartY || !touchStartTime) return;
     
     const deltaTime = Date.now() - touchStartTime;

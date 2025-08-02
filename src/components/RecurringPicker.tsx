@@ -23,7 +23,6 @@ const RecurringPicker = () => {
     addEvent,
     calendarSettings,
     updateCalendarSettings,
-    getUpcomingEvents,
     getEventsForDate,
     _hasHydrated
   } = useHydratedEventStore();
